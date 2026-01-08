@@ -1,5 +1,6 @@
 import { FaWifi, FaArrowTrendUp, FaRegStar } from "react-icons/fa6";
 import { MdPeople, MdOutlineAccessTime, MdOutlineSecurity } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
@@ -18,12 +19,16 @@ function Home() {
         </p>
 
         <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
-          <button className="bg-black text-white px-8 py-3 rounded-full">
-            Get Started
-          </button>
-          <button className="bg-white border px-8 py-3 rounded-full">
-            Login
-          </button>
+          <Link to="/register">
+            <button className="bg-black text-white px-8 py-3 rounded-full hover:bg-gray-800 transition">
+              Get Started
+            </button>
+          </Link>
+          <Link to="/login">
+            <button className="bg-white border px-8 py-3 rounded-full hover:bg-gray-50 transition">
+              Login
+            </button>
+          </Link>
         </div>
       </section>
 
@@ -153,23 +158,25 @@ function Home() {
       </section>
 
 
-     <section className="px-4 md:px-8 lg:px-12 py-16">
+      <section className="px-4 md:px-8 lg:px-12 py-16">
         <div className="bg-blue-600 rounded-3xl text-center py-16 px-6 md:px-10 lg:px-20 max-w-6xl mx-auto">
-            
-            <h1 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+
+          <h1 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
             Ready to get started?
-            </h1>
+          </h1>
 
-            <p className="text-blue-100 text-base md:text-lg lg:text-xl mb-10">
+          <p className="text-blue-100 text-base md:text-lg lg:text-xl mb-10">
             Join thousands of users who trust InternetPay for their bill payments
-            </p>
+          </p>
 
+          <Link to="/register">
             <button className="bg-white text-black font-semibold px-8 py-3 rounded-xl hover:bg-gray-100 transition">
-            Create Account
+              Create Account
             </button>
+          </Link>
 
         </div>
-    </section>
+      </section>
 
     </div>
   );

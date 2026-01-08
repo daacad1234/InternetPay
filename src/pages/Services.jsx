@@ -1,4 +1,5 @@
 import { Wifi, Check, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function Services() {
   return (
@@ -21,15 +22,17 @@ function Services() {
           <p className="text-3xl font-bold mt-2">$15<span className="text-sm text-gray-500">/month</span></p>
 
           <ul className="mt-6 space-y-3 text-sm">
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>10Mbps Speed</li>
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>Unlimited Data</li>
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>Email Support</li>
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>1 Device</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />10Mbps Speed</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />Unlimited Data</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />Email Support</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />1 Device</li>
           </ul>
+
 
           <button className="mt-6 w-full py-3 rounded-lg border hover:bg-gray-100">
             Get Started
           </button>
+
         </div>
 
         <div className="bg-white rounded-xl p-6 shadow-sm border border-blue-600 ring-2 ring-blue-500">
@@ -41,16 +44,18 @@ function Services() {
           <p className="text-3xl font-bold mt-2">$25<span className="text-sm text-gray-500">/month</span></p>
 
           <ul className="mt-6 space-y-3 text-sm">
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>20Mbps Speed</li>
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>Unlimited Data</li>
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>Priority Support</li>
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>3 Devices</li>
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>Free Router</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />20Mbps Speed</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />Unlimited Data</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />Priority Support</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />3 Devices</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />Free Router</li>
           </ul>
 
-          <button className="mt-6 w-full py-3 rounded-lg bg-black text-white hover:bg-gray-800">
-            Get Started
-          </button>
+          <Link to="/register">
+            <button className="mt-6 w-full py-3 rounded-lg bg-black text-white hover:bg-gray-800">
+              Get Started
+            </button>
+          </Link>
         </div>
 
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
@@ -58,17 +63,19 @@ function Services() {
           <p className="text-3xl font-bold mt-2">$45<span className="text-sm text-gray-500">/month</span></p>
 
           <ul className="mt-6 space-y-3 text-sm">
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>50Mbps Speed</li>
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>Unlimited Data</li>
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>24/7 Support</li>
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>5 Devices</li>
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>Free Router</li>
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>Static IP</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />50Mbps Speed</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />Unlimited Data</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />24/7 Support</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />5 Devices</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />Free Router</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />Static IP</li>
           </ul>
 
-          <button className="mt-6 w-full py-3 rounded-lg border hover:bg-gray-100">
-            Get Started
-          </button>
+          <Link to="/register">
+            <button className="mt-6 w-full py-3 rounded-lg border hover:bg-gray-100">
+              Get Started
+            </button>
+          </Link>
         </div>
 
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
@@ -76,18 +83,20 @@ function Services() {
           <p className="text-3xl font-bold mt-2">$85<span className="text-sm text-gray-500">/month</span></p>
 
           <ul className="mt-6 space-y-3 text-sm">
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>100Mbps Speed</li>
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>Unlimited Data</li>
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>Dedicated Support</li>
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>Unlimited Devices</li>
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>Free Equipment</li>
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>Static IP</li>
-            <li className="flex gap-2"><Check className="text-green-500" size={16}/>SLA Guarantee</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />100Mbps Speed</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />Unlimited Data</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />Dedicated Support</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />Unlimited Devices</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />Free Equipment</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />Static IP</li>
+            <li className="flex gap-2"><Check className="text-green-500" size={16} />SLA Guarantee</li>
           </ul>
 
-          <button className="mt-6 w-full py-3 rounded-lg border hover:bg-gray-100">
-            Get Started
-          </button>
+          <Link to="/register">
+            <button className="mt-6 w-full py-3 rounded-lg border hover:bg-gray-100">
+              Get Started
+            </button>
+          </Link>
         </div>
       </div>
 
@@ -106,55 +115,55 @@ function Services() {
               </tr>
             </thead>
 
-           <tbody>
-  <tr className="border-t">
-    <td className="p-3 text-left font-medium">Speed</td>
-    <td>10Mbps</td>
-    <td>20Mbps</td>
-    <td>50Mbps</td>
-    <td>100Mbps</td>
-  </tr>
+            <tbody>
+              <tr className="border-t">
+                <td className="p-3 text-left font-medium">Speed</td>
+                <td>10Mbps</td>
+                <td>20Mbps</td>
+                <td>50Mbps</td>
+                <td>100Mbps</td>
+              </tr>
 
-  <tr className="border-t">
-    <td className="p-3 text-left font-medium">Data Limit</td>
-    <td>Unlimited</td>
-    <td>Unlimited</td>
-    <td>Unlimited</td>
-    <td>Unlimited</td>
-  </tr>
+              <tr className="border-t">
+                <td className="p-3 text-left font-medium">Data Limit</td>
+                <td>Unlimited</td>
+                <td>Unlimited</td>
+                <td>Unlimited</td>
+                <td>Unlimited</td>
+              </tr>
 
-  <tr className="border-t">
-    <td className="p-3 text-left font-medium">Devices</td>
-    <td>1</td>
-    <td>3</td>
-    <td>5</td>
-    <td>Unlimited</td>
-  </tr>
+              <tr className="border-t">
+                <td className="p-3 text-left font-medium">Devices</td>
+                <td>1</td>
+                <td>3</td>
+                <td>5</td>
+                <td>Unlimited</td>
+              </tr>
 
-  <tr className="border-t">
-    <td className="p-3 text-left font-medium">Router</td>
-    <td><X className="text-red-500 mx-auto"/></td>
-    <td><Check className="text-green-500 mx-auto"/></td>
-    <td><Check className="text-green-500 mx-auto"/></td>
-    <td><Check className="text-green-500 mx-auto"/></td>
-  </tr>
+              <tr className="border-t">
+                <td className="p-3 text-left font-medium">Router</td>
+                <td><X className="text-red-500 mx-auto" /></td>
+                <td><Check className="text-green-500 mx-auto" /></td>
+                <td><Check className="text-green-500 mx-auto" /></td>
+                <td><Check className="text-green-500 mx-auto" /></td>
+              </tr>
 
-  <tr className="border-t">
-    <td className="p-3 text-left font-medium">Support</td>
-    <td>Email</td>
-    <td>Priority</td>
-    <td>24/7</td>
-    <td>Dedicated</td>
-  </tr>
+              <tr className="border-t">
+                <td className="p-3 text-left font-medium">Support</td>
+                <td>Email</td>
+                <td>Priority</td>
+                <td>24/7</td>
+                <td>Dedicated</td>
+              </tr>
 
-  <tr className="border-t">
-    <td className="p-3 text-left font-medium">Static IP</td>
-    <td><X className="text-red-500 mx-auto"/></td>
-    <td><X className="text-red-500 mx-auto"/></td>
-    <td><Check className="text-green-500 mx-auto"/></td>
-    <td><Check className="text-green-500 mx-auto"/></td>
-  </tr>
-</tbody>
+              <tr className="border-t">
+                <td className="p-3 text-left font-medium">Static IP</td>
+                <td><X className="text-red-500 mx-auto" /></td>
+                <td><X className="text-red-500 mx-auto" /></td>
+                <td><Check className="text-green-500 mx-auto" /></td>
+                <td><Check className="text-green-500 mx-auto" /></td>
+              </tr>
+            </tbody>
 
           </table>
         </div>

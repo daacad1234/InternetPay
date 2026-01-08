@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Register() {
   const navigate = useNavigate();
+  const { register } = useAuth();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleRegister = (e) => {
-    e.preventDefault(); // stop refresh
-    navigate("/");      // HOME PAGE
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+    const success = register(name, email, password);
+    if (success) {
+      navigate("/dashboard");
+    } else {
+      alert("Email already registered!");
+    }
   };
 
   return (
@@ -21,10 +37,37 @@ export default function Register() {
         </p>
 
         <form onSubmit={handleRegister} className="mt-6 space-y-4">
-          <input className="w-full bg-gray-100 px-4 py-2 rounded-lg" placeholder="Full Name" required />
-          <input type="email" className="w-full bg-gray-100 px-4 py-2 rounded-lg" placeholder="Email" required />
-          <input type="password" className="w-full bg-gray-100 px-4 py-2 rounded-lg" placeholder="Password" required />
-          <input type="password" className="w-full bg-gray-100 px-4 py-2 rounded-lg" placeholder="Confirm Password" required />
+          <input
+            className="w-full bg-gray-100 px-4 py-2 rounded-lg"
+            placeholder="Full Name"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            type="email"
+            className="w-full bg-gray-100 px-4 py-2 rounded-lg"
+            placeholder="Email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            className="w-full bg-gray-100 px-4 py-2 rounded-lg"
+            placeholder="Password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <input
+            type="password"
+            className="w-full bg-gray-100 px-4 py-2 rounded-lg"
+            placeholder="Confirm Password"
+            required
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
 
           <button className="w-full bg-black text-white py-2 rounded-lg">
             Register

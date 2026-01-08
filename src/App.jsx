@@ -11,13 +11,17 @@ import BillDetailsPage from "./Componenets/BillDetailsPage"
 import PaymentHistoryPage from "./Componenets/PaymentHistoryPage"
 import PaymentPage from "./pages/PaymentPage"
 import ReceiptPage from "./pages/ReceiptPage"
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, useLocation } from "react-router-dom"
+import { AuthProvider } from "./context/AuthContext"
 
-function App () {
+function AppContent() {
+  const location = useLocation();
+  const publicPaths = ["/", "/about", "/services"];
+  const showHeaderFooter = publicPaths.includes(location.pathname);
+
   return (
     <>
-      <Header />
-      
+      {showHeaderFooter && <Header />}
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -29,14 +33,22 @@ function App () {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/dashboard" element={<DashboardPage />} />
 
-        <Route path="/billpayment" element={<PaymentPage />} />
+        <Route path="/payment" element={<PaymentPage />} />
         <Route path="/receipt" element={<ReceiptPage />} />
         <Route path="/billdetails" element={<BillDetailsPage />} />
         <Route path="/payment-history" element={<PaymentHistoryPage />} />
       </Routes>
 
-      <Footer />
+      {showHeaderFooter && <Footer />}
     </>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   )
 }
 
