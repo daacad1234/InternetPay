@@ -7,11 +7,14 @@ import {
     FaSignOutAlt,
     FaArrowRight,
     FaBars,
-    FaTimes
+    FaTimes,
+    FaRocket,
+    FaBolt,
+    FaCheckCircle
 } from 'react-icons/fa';
 
 function DashboardPage() {
-    const { user, logout } = useAuth();
+    const { user, logout, AVAILABLE_PACKAGES, selectPackage } = useAuth();
     const navigate = useNavigate();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [activeMenu, setActiveMenu] = useState('dashboard');
@@ -131,11 +134,72 @@ function DashboardPage() {
                             </h1>
                         </div>
                         <div className="flex gap-3">
+                            {user?.plan && (
+                                <div className="hidden md:flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-gray-100 shadow-sm">
+                                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                                    <span className="text-sm font-bold text-gray-700">{user.plan}</span>
+                                </div>
+                            )}
                         </div>
                     </header>
 
-                    {/* Example Content for Dashboard - Only show if Dashboard tab is active for now, or mix */}
-                    {activeMenu === 'dashboard' && (
+                    {/* Package Selection Screen (If no plan selected) */}
+                    {activeMenu === 'dashboard' && !user?.plan && (
+                        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                            <div className="max-w-3xl">
+                                <h3 className="text-2xl font-bold text-gray-900 mb-2">Choose Your Internet Package</h3>
+                                <p className="text-gray-500 font-medium">Select the best plan that fits your needs. You can upgrade or change later.</p>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                {AVAILABLE_PACKAGES.map((pkg) => (
+                                    <div
+                                        key={pkg.id}
+                                        className="group relative bg-white border border-gray-100 rounded-[2rem] p-8 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col"
+                                    >
+                                        <div className="mb-6">
+                                            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-500">
+                                                {pkg.speed === '20 Mbps' && <FaWifi size={24} />}
+                                                {pkg.speed === '40 Mbps' && <FaBolt size={24} />}
+                                                {pkg.speed === '60 Mbps' && <FaBolt size={24} />}
+                                                {pkg.speed === '100 Mbps' && <FaRocket size={24} />}
+                                            </div>
+                                            <h4 className="text-xl font-bold text-gray-900 mb-1">{pkg.name}</h4>
+                                            <p className="text-blue-600 font-extrabold text-sm uppercase tracking-wider">{pkg.speed}</p>
+                                        </div>
+
+                                        <div className="mb-8">
+                                            <div className="flex items-baseline gap-1 mb-6">
+                                                <span className="text-4xl font-black text-gray-900">${pkg.price}</span>
+                                                <span className="text-gray-400 font-medium">/month</span>
+                                            </div>
+                                            <ul className="space-y-3">
+                                                {pkg.features.map((feature, idx) => (
+                                                    <li key={idx} className="flex items-center gap-3 text-sm text-gray-500 font-medium">
+                                                        <FaCheckCircle className="text-emerald-500" />
+                                                        {feature}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+
+                                        <button
+                                            onClick={() => {
+                                                selectPackage(pkg.name, pkg.price);
+                                                navigate('/payment');
+                                            }}
+                                            className="mt-auto w-full py-4 bg-gray-900 text-white rounded-2xl font-bold hover:bg-blue-600 transition-all duration-300 shadow-lg shadow-gray-900/10 hover:shadow-blue-500/30"
+                                        >
+                                            Select Plan
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Header / Welcome content continued... */}
+                    {activeMenu === 'dashboard' && user?.plan && (
                         <>
                             {/* Bill Card */}
                             <div className={`p-8 rounded-[2.5rem] shadow-2xl relative overflow-hidden transition-all duration-500 group ${user?.paymentStatus === 'Paid' ? 'bg-gradient-to-br from-emerald-500 to-teal-700' : 'bg-gradient-to-br from-slate-800 to-gray-900'}`}>

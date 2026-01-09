@@ -9,6 +9,13 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+  const AVAILABLE_PACKAGES = [
+    { id: 'p1', name: 'Fiber 20Mbps', price: 25.00, speed: '20 Mbps', features: ['Unlimited Data', 'Free Installation', '24/7 Support'] },
+    { id: 'p2', name: 'Fiber 40Mbps', price: 35.00, speed: '40 Mbps', features: ['Unlimited Data', 'Ultra HD Streaming', 'Priority Support'] },
+    { id: 'p3', name: 'Fiber 60Mbps', price: 50.00, speed: '60 Mbps', features: ['Unlimited Data', 'Gaming Optimized', 'Static IP Included'] },
+    { id: 'p4', name: 'Fiber 100Mbps', price: 75.00, speed: '100 Mbps', features: ['Unlimited Data', 'Business Grade', 'Concierge Service'] },
+  ];
+
   useEffect(() => {
     // Check local storage for persisted session
     const storedUser = localStorage.getItem('internetPayUser');
@@ -69,11 +76,11 @@ export const AuthProvider = ({ children }) => {
       email,
       password,
       role: 'user',
-      plan: 'Fiber 20Mbps',
+      plan: null, // No plan initially
       status: 'Inactive', // Default
       paymentStatus: 'Unpaid',
-      amountDue: 25.00,
-      due: '10 Jan 2026',
+      amountDue: 0, // No amount due until package selected
+      due: null,
       paymentHistory: []
     };
 
@@ -105,6 +112,21 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('internetPayUser', JSON.stringify(updatedUser));
 
       // 2. Update Global DB (For Admin Visibility)
+      syncToGlobalDB(updatedUser);
+    }
+  };
+
+  const selectPackage = (packageName, price) => {
+    if (user) {
+      const updatedUser = {
+        ...user,
+        plan: packageName,
+        amountDue: price,
+        due: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+      };
+
+      setUser(updatedUser);
+      localStorage.setItem('internetPayUser', JSON.stringify(updatedUser));
       syncToGlobalDB(updatedUser);
     }
   };
@@ -157,6 +179,8 @@ export const AuthProvider = ({ children }) => {
     logout,
     register,
     markAsPaid,
+    selectPackage,
+    AVAILABLE_PACKAGES,
     getAllUsers,
     updateUserBill,
     deleteUser
