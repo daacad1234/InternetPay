@@ -13,7 +13,6 @@ import {
     FaTrash
 } from 'react-icons/fa';
 
-// --- Micro-Components for Charts (Kept for Report visuals if needed, or remove if unused) ---
 
 
 
@@ -23,14 +22,12 @@ function AdminDashboard() {
     const [activeTab, setActiveTab] = useState('history');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-    // Load Live Users from "Backend"
     const [users, setUsers] = useState([]);
 
     React.useEffect(() => {
         setUsers(getAllUsers());
     }, []);
 
-    // Aggregate Global History from all users
     const history = users.flatMap(u =>
         (u.paymentHistory || []).map(tx => ({ ...tx, user: u.name, userId: u.id }))
     ).sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -49,7 +46,7 @@ function AdminDashboard() {
     const handleDeleteUser = (userId) => {
         if (window.confirm("Are you sure you want to delete this customer? This action cannot be undone.")) {
             deleteUser(userId);
-            setUsers(getAllUsers()); // Refresh list
+            setUsers(getAllUsers()); 
         }
     };
 
@@ -62,7 +59,6 @@ function AdminDashboard() {
     return (
         <div className="flex h-screen bg-slate-100 font-sans overflow-hidden">
 
-            {/* Mobile Sidebar Overlay */}
             {isSidebarOpen && (
                 <div
                     className="fixed inset-0 bg-black/50 z-20 md:hidden backdrop-blur-sm"
@@ -70,7 +66,6 @@ function AdminDashboard() {
                 />
             )}
 
-            {/* Sidebar - Darker Theme for Admin */}
             <aside className={`
           fixed inset-y-0 left-0 z-30 w-72 bg-slate-900 text-slate-300 shadow-2xl transform transition-transform duration-300 ease-in-out md:translate-x-0 md:static
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
@@ -123,10 +118,8 @@ function AdminDashboard() {
                 </div>
             </aside>
 
-            {/* Main Content */}
             <main className="flex-1 overflow-y-auto relative bg-slate-100 w-full">
 
-                {/* Mobile Header */}
                 <div className="md:hidden sticky top-0 z-10 bg-white border-b border-gray-200 p-4 flex justify-between items-center shadow-sm">
                     <span className="font-bold text-slate-800">Admin Portal</span>
                     <button
@@ -159,10 +152,7 @@ function AdminDashboard() {
                         </div>
                     </header>
 
-                    {/* Dashboard or User view - For simplicity, mapping 'users' to the User Table content */}
 
-
-                    {/* Transaction History View */}
                     {activeTab === 'history' && (
                         <div className="bg-white rounded-[2rem] shadow-sm border border-slate-200 overflow-hidden">
                             <div className="p-8 border-b border-slate-100">
@@ -199,7 +189,6 @@ function AdminDashboard() {
                     )}
 
 
-                    {/* Customer Management View */}
                     {activeTab === 'users' && (
                         <div className="bg-white rounded-[2rem] shadow-sm border border-slate-200 overflow-hidden">
                             <div className="p-8 border-b border-slate-100 flex justify-between items-center">
@@ -262,7 +251,6 @@ function AdminDashboard() {
                         </div>
                     )}
 
-                    {/* Reports View */}
                     {activeTab === 'reports' && (
                         <div className="bg-white rounded-[2rem] shadow-sm border border-slate-200 overflow-hidden">
                             <div className="p-8 border-b border-slate-100 flex justify-between items-center">
@@ -270,15 +258,15 @@ function AdminDashboard() {
                             </div>
                             <div className="p-8">
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                                    {/* Monthly Summary Cards (Computed) */}
+
                                     {(() => {
-                                        // Group by Month-Year
+
                                         const monthlyData = history.reduce((acc, tx) => {
                                             const date = new Date(tx.date);
                                             const key = date.toLocaleString('default', { month: 'long', year: 'numeric' });
                                             if (!acc[key]) acc[key] = { total: 0, count: 0 };
                                             acc[key].count += 1;
-                                            // Extract numeric amount (remove $ and commas)
+
                                             const valStr = String(tx.amount || '0');
                                             const amount = parseFloat(valStr.replace(/[^0-9.]/g, '')) || 0;
                                             acc[key].total += amount;
@@ -318,7 +306,7 @@ function AdminDashboard() {
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-slate-100">
-                                            {/* Re-calculate for table view (detailed breakdown per transaction) */}
+
                                             {history.map((tx, idx) => {
                                                 const date = new Date(tx.date);
                                                 const monthYear = date.toLocaleString('default', { month: 'long', year: 'numeric' });

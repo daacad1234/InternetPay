@@ -15,10 +15,8 @@ function Footer() {
     <section className="bg-gradient-to-b from-slate-900 to-slate-950 text-gray-300">
       <div className="px-4 sm:px-6 md:px-10 lg:px-50 py-14">
 
-        {/* Top Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 
-          {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Wifi className="text-blue-500" />
@@ -40,7 +38,6 @@ function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h3 className="text-white font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-3 text-sm">
@@ -52,7 +49,6 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Support */}
           <div>
             <h3 className="text-white font-semibold mb-4">Support</h3>
             <ul className="space-y-3 text-sm">
@@ -64,7 +60,6 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
             <h3 className="text-white font-semibold mb-4">Contact Us</h3>
 
@@ -88,10 +83,8 @@ function Footer() {
           </div>
         </div>
 
-        {/* Divider */}
         <div className="h-px bg-slate-800 my-10"></div>
 
-        {/* Bottom */}
         <div className="flex flex-col md:flex-row gap-4 md:gap-0 items-center justify-between text-sm">
           <p>© 2026 InternetPay. All rights reserved.</p>
 

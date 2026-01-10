@@ -9,15 +9,14 @@ function PaymentPage() {
     const [method, setMethod] = useState('card');
     const [loading, setLoading] = useState(false);
 
-    // Default to 0 if user not found or field missing
     const billAmount = user?.amountDue ? parseFloat(user.amountDue) : 0.00;
-    const lateFee = 0.00; // Fixed for now, can be dynamic later
+    const lateFee = 0.00; 
     const totalAmount = billAmount + lateFee;
 
     const handlePayment = (e) => {
         e.preventDefault();
         setLoading(true);
-        // Simulate processing delay
+
         setTimeout(() => {
             setLoading(false);
 
@@ -31,7 +30,6 @@ function PaymentPage() {
 
             markAsPaid(transaction);
 
-            // Navigate to receipt with payment details
             navigate('/receipt', { state: transaction });
         }, 2000);
     };
@@ -60,7 +58,6 @@ function PaymentPage() {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
             <div className="max-w-4xl w-full bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
 
-                {/* Summary Section */}
                 <div className="w-full md:w-1/3 bg-gray-900 p-8 text-white flex flex-col justify-between">
                     <div>
                         <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
@@ -88,11 +85,9 @@ function PaymentPage() {
                     </div>
                 </div>
 
-                {/* Payment Form Section */}
                 <div className="w-full md:w-2/3 p-8">
                     <h2 className="text-2xl font-bold text-gray-800 mb-6">Select Payment Method</h2>
 
-                    {/* Method Selection */}
                     <div className="grid grid-cols-3 gap-4 mb-8">
                         <button
                             onClick={() => setMethod('card')}

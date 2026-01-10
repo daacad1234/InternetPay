@@ -74,11 +74,11 @@ function Header() {
             ) : (
               <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 md:gap-5">
                 <button className="bg-white shadow px-5 py-2 rounded-2xl">
-                  <Link to="/login"><li>Login</li></Link>
+                  <Link to="/admin/login"><li>Admin</li></Link>
                 </button>
 
                 <button className="bg-black text-white shadow px-5 py-2 rounded-2xl">
-                  <Link to="/register"><li>Register</li></Link>
+                  <Link to="/login"><li>Login</li></Link>
                 </button>
               </div>
             )}

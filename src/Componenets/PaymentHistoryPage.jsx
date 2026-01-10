@@ -7,7 +7,6 @@ function PaymentHistoryPage() {
     const navigate = useNavigate();
     const { user } = useAuth();
 
-    // Use dynamic history from user context, fallback to empty array
     const history = user?.paymentHistory || [];
 
     return (

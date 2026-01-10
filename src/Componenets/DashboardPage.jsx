@@ -32,7 +32,7 @@ function DashboardPage() {
     return (
         <div className="flex h-screen bg-gray-50 font-sans overflow-hidden">
 
-            {/* Mobile Sidebar Overlay */}
+
             {isSidebarOpen && (
                 <div
                     className="fixed inset-0 bg-black/50 z-20 md:hidden glass"
@@ -40,13 +40,12 @@ function DashboardPage() {
                 />
             )}
 
-            {/* Sidebar */}
             <aside className={`
           fixed inset-y-0 left-0 z-30 w-72 bg-white border-r border-gray-100 shadow-xl transform transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:shadow-none
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
                 <div className="h-full flex flex-col">
-                    {/* Logo Area */}
+
                     <div className="p-8 flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white text-xl shadow-lg shadow-blue-500/30">
@@ -59,7 +58,6 @@ function DashboardPage() {
                         </button>
                     </div>
 
-                    {/* Navigation */}
                     <nav className="flex-1 px-4 space-y-2 overflow-y-auto custom-scrollbar">
                         {menuItems.map((item) => (
                             <button
@@ -84,7 +82,6 @@ function DashboardPage() {
                         ))}
                     </nav>
 
-                    {/* User Profile & Logout */}
                     <div className="p-4 border-t border-gray-100">
                         <div className="bg-gray-50 p-4 rounded-2xl mb-2 flex items-center gap-3">
                             <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-400 flex items-center justify-center text-white font-bold shadow-md">
@@ -105,9 +102,8 @@ function DashboardPage() {
                 </div>
             </aside>
 
-            {/* Main Content Area */}
             <main className="flex-1 overflow-y-auto relative w-full">
-                {/* Mobile Header */}
+
                 <div className="md:hidden sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-gray-100 p-4 flex justify-between items-center">
                     <div className="flex items-center gap-3">
                         <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white text-sm shadow-md">
@@ -125,7 +121,6 @@ function DashboardPage() {
 
                 <div className="p-6 md:p-10 max-w-7xl mx-auto space-y-8">
 
-                    {/* Header / Welcome */}
                     <header className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                         <div>
                             <h2 className="text-gray-500 font-medium mb-1">Welcome back,</h2>
@@ -143,7 +138,6 @@ function DashboardPage() {
                         </div>
                     </header>
 
-                    {/* Package Selection Screen (If no plan selected) */}
                     {activeMenu === 'dashboard' && !user?.plan && (
                         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
                             <div className="max-w-3xl">
@@ -198,12 +192,9 @@ function DashboardPage() {
                         </div>
                     )}
 
-                    {/* Header / Welcome content continued... */}
                     {activeMenu === 'dashboard' && user?.plan && (
                         <>
-                            {/* Bill Card */}
                             <div className={`p-8 rounded-[2.5rem] shadow-2xl relative overflow-hidden transition-all duration-500 group ${user?.paymentStatus === 'Paid' ? 'bg-gradient-to-br from-emerald-500 to-teal-700' : 'bg-gradient-to-br from-slate-800 to-gray-900'}`}>
-                                {/* Background Decor */}
                                 <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-white opacity-5 rounded-full blur-3xl group-hover:opacity-10 transition-opacity"></div>
                                 <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-60 h-60 bg-black opacity-10 rounded-full blur-3xl"></div>
 
@@ -247,6 +238,9 @@ function DashboardPage() {
                                                 Pay Bill <FaArrowRight />
                                             </Link>
                                         )}
+                                        <Link to="/billdetails" className="px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/10 rounded-xl font-bold hover:bg-white/20 transition text-white">
+                                            View Bill Details
+                                        </Link>
                                         <Link to="/receipt" className="px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/10 rounded-xl font-bold hover:bg-white/20 transition text-white">
                                             Latest Receipt
                                         </Link>
@@ -258,7 +252,6 @@ function DashboardPage() {
                         </>
                     )}
 
-                    {/* Payment History View */}
                     {activeMenu === 'history' && (
                         <div className="bg-white rounded-[2.5rem] shadow-sm border border-gray-100 overflow-hidden">
                             <div className="p-8 border-b border-gray-50 flex items-center gap-3">
@@ -308,7 +301,6 @@ function DashboardPage() {
                         </div>
                     )}
 
-                    {/* Placeholder for other tabs (if any added later) */}
                     {activeMenu !== 'dashboard' && activeMenu !== 'history' && (
                         <div className="bg-white rounded-3xl p-10 text-center shadow-sm border border-gray-100">
                             <h2 className="text-2xl font-bold text-gray-900 mb-2">Coming Soon</h2>
