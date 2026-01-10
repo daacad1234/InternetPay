@@ -5,8 +5,8 @@ import {
     FaChartLine,
     FaHistory,
     FaTimes,
-    FaDownload,
     FaClipboardList,
+    FaSearch,
     FaBars,
     FaSignOutAlt,
     FaUsers,
@@ -21,6 +21,7 @@ function AdminDashboard() {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('history');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const [users, setUsers] = useState([]);
 
@@ -37,6 +38,8 @@ function AdminDashboard() {
         navigate('/');
     };
 
+
+
     const menuItems = [
         { id: 'history', label: 'Payment Monitoring', icon: <FaHistory /> },
         { id: 'reports', label: 'Monthly Reports', icon: <FaClipboardList /> },
@@ -46,7 +49,7 @@ function AdminDashboard() {
     const handleDeleteUser = (userId) => {
         if (window.confirm("Are you sure you want to delete this customer? This action cannot be undone.")) {
             deleteUser(userId);
-            setUsers(getAllUsers()); 
+            setUsers(getAllUsers());
         }
     };
 
@@ -72,7 +75,7 @@ function AdminDashboard() {
       `}>
                 <div className="h-full flex flex-col">
                     <div className="p-8 flex items-center justify-between border-b border-white/5">
-                        <div className="flex items-center gap-3">
+                        <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                             <div className="w-9 h-9 bg-indigo-600 rounded-lg flex items-center justify-center text-white text-lg shadow-lg shadow-indigo-500/50">
                                 <FaChartLine />
                             </div>
@@ -80,7 +83,7 @@ function AdminDashboard() {
                                 <h2 className="text-lg font-bold text-white tracking-wide">ADMIN</h2>
                                 <p className="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Portal</p>
                             </div>
-                        </div>
+                        </Link>
                         <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-slate-500">
                             <FaTimes />
                         </button>
@@ -155,8 +158,17 @@ function AdminDashboard() {
 
                     {activeTab === 'history' && (
                         <div className="bg-white rounded-[2rem] shadow-sm border border-slate-200 overflow-hidden">
-                            <div className="p-8 border-b border-slate-100">
+                            <div className="p-8 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
                                 <h2 className="text-xl font-bold text-slate-800">Payment Monitoring</h2>
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        placeholder="Search transactions..."
+                                        className="pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 w-full md:w-64"
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                    />
+                                    <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs" />
+                                </div>
                             </div>
                             <div className="overflow-x-auto">
                                 <table className="w-full text-left">
@@ -170,15 +182,29 @@ function AdminDashboard() {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100">
-                                        {history.map((h) => (
-                                            <tr key={h.id} className="hover:bg-slate-50 transition">
-                                                <td className="p-6 font-mono text-xs text-slate-500">{h.id}</td>
-                                                <td className="p-6 font-bold text-slate-800 text-sm">{h.user}</td>
-                                                <td className="p-6 font-bold text-emerald-600">{h.amount}</td>
-                                                <td className="p-6 text-slate-500 text-sm">{h.date}</td>
-                                                <td className="p-6 text-slate-600 text-sm">{h.method}</td>
-                                            </tr>
-                                        ))}
+                                        {history
+                                            .filter(h =>
+                                                h.user.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                                h.id.toLowerCase().includes(searchTerm.toLowerCase())
+                                            )
+                                            .map((h) => (
+                                                <tr key={h.id} className="hover:bg-slate-50 transition">
+                                                    <td className="p-6 font-mono text-xs text-slate-500">
+                                                        <span className="bg-slate-100 px-2 py-1 rounded text-slate-600">{h.id}</span>
+                                                    </td>
+                                                    <td className="p-6">
+                                                        <p className="font-bold text-slate-800 text-sm">{h.user}</p>
+                                                        <p className="text-[10px] text-slate-400 font-medium">Customer ID: {h.userId}</p>
+                                                    </td>
+                                                    <td className="p-6 font-bold text-emerald-600">
+                                                        {h.amount}
+                                                    </td>
+                                                    <td className="p-6 text-slate-500 text-sm">{h.date}</td>
+                                                    <td className="p-6">
+                                                        <span className="text-slate-600 text-sm bg-slate-50 px-3 py-1 rounded-full border border-slate-100">{h.method}</span>
+                                                    </td>
+                                                </tr>
+                                            ))}
                                         {history.length === 0 && (
                                             <tr><td colSpan="5" className="p-8 text-center text-slate-400">No transactions found.</td></tr>
                                         )}
@@ -231,7 +257,8 @@ function AdminDashboard() {
                                                         {u.status}
                                                     </span>
                                                 </td>
-                                                <td className="p-6 text-right">
+                                                <td className="p-6 text-right flex justify-end gap-2">
+
                                                     <button
                                                         onClick={() => handleDeleteUser(u.id)}
                                                         className="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
@@ -253,85 +280,112 @@ function AdminDashboard() {
 
                     {activeTab === 'reports' && (
                         <div className="bg-white rounded-[2rem] shadow-sm border border-slate-200 overflow-hidden">
-                            <div className="p-8 border-b border-slate-100 flex justify-between items-center">
+                            <div className="p-8 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
                                 <h2 className="text-xl font-bold text-slate-800">Monthly Financial Reports</h2>
                             </div>
                             <div className="p-8">
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                                    <div className="bg-indigo-600 p-8 rounded-[2rem] text-white shadow-xl shadow-indigo-200 relative overflow-hidden group">
+                                        <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+                                        <p className="text-indigo-100 text-xs font-bold uppercase tracking-widest mb-2">Total Revenue</p>
+                                        <h3 className="text-4xl font-black">${history.reduce((acc, tx) => acc + (parseFloat(String(tx.amount || '0').replace(/[^0-9.]/g, '')) || 0), 0).toFixed(2)}</h3>
+                                        <div className="mt-4 flex items-center gap-2 text-xs font-bold bg-white/20 w-fit px-3 py-1 rounded-full border border-white/10">
+                                            <span className="text-emerald-300">↑ 12.5%</span>
+                                            <span className="opacity-60">vs last month</span>
+                                        </div>
+                                    </div>
 
-                                    {(() => {
+                                    <div className="bg-slate-900 p-8 rounded-[2rem] text-white shadow-xl shadow-slate-200 relative overflow-hidden group">
+                                        <div className="absolute bottom-0 right-0 -mr-8 -mb-8 w-32 h-32 bg-indigo-500/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+                                        <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Active Customers</p>
+                                        <h3 className="text-4xl font-black">{users.filter(u => u.status === 'Active').length}</h3>
+                                        <div className="mt-4 flex items-center gap-2 text-xs font-bold bg-white/5 w-fit px-3 py-1 rounded-full border border-white/5">
+                                            <span className="text-indigo-400">{users.length}</span>
+                                            <span className="opacity-40 text-slate-500">Total Registered</span>
+                                        </div>
+                                    </div>
 
-                                        const monthlyData = history.reduce((acc, tx) => {
-                                            const date = new Date(tx.date);
-                                            const key = date.toLocaleString('default', { month: 'long', year: 'numeric' });
-                                            if (!acc[key]) acc[key] = { total: 0, count: 0 };
-                                            acc[key].count += 1;
+                                    <div className="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm relative overflow-hidden group">
+                                        <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Total Transactions</p>
+                                        <h3 className="text-4xl font-black text-slate-800">{history.length}</h3>
 
-                                            const valStr = String(tx.amount || '0');
-                                            const amount = parseFloat(valStr.replace(/[^0-9.]/g, '')) || 0;
-                                            acc[key].total += amount;
-                                            return acc;
-                                        }, {});
+                                    </div>
+                                </div>
 
-                                        const months = Object.keys(monthlyData);
+                                <h3 className="font-bold text-slate-800 mb-6 flex items-center gap-2">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+                                    Monthly Breakdown
+                                </h3>
 
-                                        if (months.length === 0) {
-                                            return <div className="col-span-3 text-center text-slate-500 py-8">No transaction data available to generate reports.</div>;
-                                        }
+                                {(() => {
 
-                                        return months.map(month => (
-                                            <div key={month} className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                                                <h3 className="text-slate-500 font-bold text-xs uppercase tracking-wider mb-2">{month}</h3>
-                                                <div className="flex justify-between items-end">
-                                                    <span className="text-2xl font-extrabold text-slate-800">${monthlyData[month].total.toFixed(2)}</span>
-                                                    <span className="text-xs font-bold bg-white px-2 py-1 rounded-md shadow-sm border border-slate-100 text-slate-600">
-                                                        {monthlyData[month].count} txns
-                                                    </span>
-                                                </div>
+                                    const monthlyData = history.reduce((acc, tx) => {
+                                        const date = new Date(tx.date);
+                                        const key = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+                                        if (!acc[key]) acc[key] = { total: 0, count: 0 };
+                                        acc[key].count += 1;
+
+                                        const valStr = String(tx.amount || '0');
+                                        const amount = parseFloat(valStr.replace(/[^0-9.]/g, '')) || 0;
+                                        acc[key].total += amount;
+                                        return acc;
+                                    }, {});
+
+                                    const months = Object.keys(monthlyData);
+
+                                    if (months.length === 0) {
+                                        return <div className="col-span-3 text-center text-slate-500 py-8">No transaction data available to generate reports.</div>;
+                                    }
+
+                                    return months.map(month => (
+                                        <div key={month} className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                                            <h3 className="text-slate-500 font-bold text-xs uppercase tracking-wider mb-2">{month}</h3>
+                                            <div className="flex justify-between items-end">
+                                                <span className="text-2xl font-extrabold text-slate-800">${monthlyData[month].total.toFixed(2)}</span>
+                                                <span className="text-xs font-bold bg-white px-2 py-1 rounded-md shadow-sm border border-slate-100 text-slate-600">
+                                                    {monthlyData[month].count} txns
+                                                </span>
                                             </div>
-                                        ));
-                                    })()}
-                                </div>
+                                        </div>
+                                    ));
+                                })()}
+                            </div>
 
-                                <h3 className="font-bold text-slate-800 mb-4">Detailed Breakdown</h3>
-                                <div className="overflow-x-auto rounded-xl border border-slate-100">
-                                    <table className="w-full text-left">
-                                        <thead className="bg-slate-50">
-                                            <tr>
-                                                <th className="p-4 font-bold text-slate-400 text-xs uppercase tracking-wider">Month</th>
-                                                <th className="p-4 font-bold text-slate-400 text-xs uppercase tracking-wider">User</th>
-                                                <th className="p-4 font-bold text-slate-400 text-xs uppercase tracking-wider">Total Revenue</th>
-                                                <th className="p-4 font-bold text-slate-400 text-xs uppercase tracking-wider">Transactions</th>
-                                                <th className="p-4 font-bold text-slate-400 text-xs uppercase tracking-wider">Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="divide-y divide-slate-100">
+                            <h3 className="font-bold text-slate-800 mb-4">Detailed Breakdown</h3>
+                            <div className="overflow-x-auto rounded-xl border border-slate-100">
+                                <table className="w-full text-left">
+                                    <thead className="bg-slate-50">
+                                        <tr>
+                                            <th className="p-4 font-bold text-slate-400 text-xs uppercase tracking-wider">Month</th>
+                                            <th className="p-4 font-bold text-slate-400 text-xs uppercase tracking-wider">User</th>
+                                            <th className="p-4 font-bold text-slate-400 text-xs uppercase tracking-wider">Total Revenue</th>
+                                            <th className="p-4 font-bold text-slate-400 text-xs uppercase tracking-wider">Transactions</th>
+                                            <th className="p-4 font-bold text-slate-400 text-xs uppercase tracking-wider">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-100">
 
-                                            {history.map((tx, idx) => {
-                                                const date = new Date(tx.date);
-                                                const monthYear = date.toLocaleString('default', { month: 'long', year: 'numeric' });
-                                                return (
-                                                    <tr key={idx}>
-                                                        <td className="p-4 font-bold text-slate-800">{monthYear}</td>
-                                                        <td className="p-4 text-slate-600 font-medium">{tx.user}</td>
-                                                        <td className="p-4 font-mono text-emerald-600 font-bold">{tx.amount}</td>
-                                                        <td className="p-4 text-slate-600">1</td>
-                                                        <td className="p-4"><span className="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded">Finalized</span></td>
-                                                    </tr>
-                                                );
-                                            })}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        {history.map((tx, idx) => {
+                                            const date = new Date(tx.date);
+                                            const monthYear = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+                                            return (
+                                                <tr key={idx}>
+                                                    <td className="p-4 font-bold text-slate-800">{monthYear}</td>
+                                                    <td className="p-4 text-slate-600 font-medium">{tx.user}</td>
+                                                    <td className="p-4 font-mono text-emerald-600 font-bold">{tx.amount}</td>
+                                                    <td className="p-4 text-slate-600">1</td>
+                                                    <td className="p-4"><span className="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded">Finalized</span></td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     )}
-
-
-
-
-
                 </div>
+
+
             </main>
         </div>
     );

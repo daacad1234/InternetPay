@@ -13,9 +13,9 @@ export default function Login() {
         e.preventDefault();
         setError("");
 
-        // Prevent admin from logging in through customer login
+
         if (email === 'admin@test.com') {
-            setError("This is not allowed for you. Please use the Admin login.");
+            setError("Meshan user loguma tala galin. Kaliya Admin logu tala galay");
             return;
         }
 
